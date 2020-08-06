@@ -1,0 +1,10 @@
+# enable/disable patches
+
+# Cancel session login if player is connecting from `localhost`
+authme-geyser: false
+
+# Do not send message to discord chat if player is soft-muted
+discordsrv-griefprevention: false
+
+# Replace `%nickname%` placeholder with player nickname
+discordsrv-chat: false
