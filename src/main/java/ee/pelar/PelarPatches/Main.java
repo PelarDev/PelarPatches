@@ -41,6 +41,13 @@ public class Main extends JavaPlugin {
             );
         }
 
+        if (config.getBoolean("tp_protection")) {
+            enablePatch(
+                    "TP_Protection",
+                    new ee.pelar.PelarPatches.TP_Protection.Events()
+            );
+        }
+
         log("Enabled " + enabledPatches + " patch(es)!");
     }
 

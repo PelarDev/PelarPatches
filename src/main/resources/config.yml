@@ -8,3 +8,6 @@ discordsrv-griefprevention: false
 
 # Replace `%nickname%` placeholder with player nickname
 discordsrv-chat: false
+
+# Protects player after teleport (command, plugin, unknown)
+tp_protection: false
