@@ -29,7 +29,6 @@ public class Events implements Listener {
                 || event.getCause().name().equals("UNKNOWN"))
                 && event.getPlayer().getGameMode().toString().equals("SURVIVAL")
                 && !event.getTo().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
-            System.out.println("Lisasin");
             cooldown.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
         }
     }
