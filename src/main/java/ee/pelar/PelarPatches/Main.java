@@ -44,7 +44,7 @@ public class Main extends JavaPlugin {
         if (config.getBoolean("tp_protection")) {
             enablePatch(
                     "TP_Protection",
-                    new ee.pelar.PelarPatches.TP_Protection.Events()
+                    new ee.pelar.PelarPatches.TP_Protection.Events(config.getInt("tp_protection_cooldown"))
             );
         }
 

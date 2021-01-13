@@ -11,3 +11,4 @@ discordsrv-chat: false
 
 # Protects player after teleport (command, plugin, unknown)
 tp_protection: false
+tp_protection_cooldown: 30

@@ -15,7 +15,12 @@ import java.util.UUID;
 public class Events implements Listener {
 
     private HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
-    private final int cooldownLenght = 15;
+    private int cooldownLenght = 30;
+
+    public Events(int cooldownLenght) {
+        this.cooldownLenght = cooldownLenght;
+    }
+
 
     @EventHandler
     public void onPlayerTp(PlayerTeleportEvent event) {
@@ -24,6 +29,7 @@ public class Events implements Listener {
                 || event.getCause().name().equals("UNKNOWN"))
                 && event.getPlayer().getGameMode().toString().equals("SURVIVAL")
                 && !event.getTo().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+            System.out.println("Lisasin");
             cooldown.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
         }
     }
@@ -36,6 +42,10 @@ public class Events implements Listener {
                 event.getDamager().sendMessage(ChatColor.RED + "TP järgne puutumatus pole veel läbi saanud.");
             }
         }
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event) {
         if((event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)
                 || (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
                 && (event.getEntity() instanceof Player)) {
@@ -47,7 +57,7 @@ public class Events implements Listener {
     
     public boolean isInCooldown(UUID uuid) {
         if(cooldown.containsKey(uuid)) {
-            long timeLeft = (cooldown.get(uuid) + cooldownLenght * 1000) - System.currentTimeMillis();
+            long timeLeft = (cooldown.get(uuid) + this.cooldownLenght * 1000L) - System.currentTimeMillis();
             return (timeLeft > 0);
         } else {
             return false;
