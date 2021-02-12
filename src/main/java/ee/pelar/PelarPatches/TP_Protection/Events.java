@@ -2,6 +2,7 @@ package ee.pelar.PelarPatches.TP_Protection;
 
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,6 +40,22 @@ public class Events implements Listener {
             if(isInCooldown(event.getDamager().getUniqueId()) || isInCooldown(event.getEntity().getUniqueId())) {
                 event.setCancelled(true);
                 event.getDamager().sendMessage(ChatColor.RED + "TP järgne puutumatus pole veel läbi saanud.");
+            }
+        }
+        if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
+            Arrow arrow = (Arrow) event.getDamager();
+            if (arrow.getShooter() instanceof Player) {
+                Player shooterP = (Player) arrow.getShooter();
+                Player targetP = (Player) event.getEntity();
+                if (isInCooldown(shooterP.getUniqueId())) {
+                    event.setCancelled(true);
+                    arrow.remove();
+                    shooterP.sendMessage(ChatColor.RED + "TP järgne puutumatus pole veel läbi saanud.");
+                } else if (isInCooldown(targetP.getUniqueId())) {
+                    event.setCancelled(true);
+                    arrow.remove();
+                    shooterP.sendMessage(ChatColor.RED + "TP järgne puutumatus pole veel läbi saanud.");
+                }
             }
         }
     }

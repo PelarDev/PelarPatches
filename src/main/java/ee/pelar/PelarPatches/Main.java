@@ -48,6 +48,13 @@ public class Main extends JavaPlugin {
             );
         }
 
+        if (config.getBoolean("tp_protection")) {
+            enablePatch(
+                    "TP_Protection",
+                    new ee.pelar.PelarPatches.DynmapSpectatorHide.Events()
+            );
+        }
+
         log("Enabled " + enabledPatches + " patch(es)!");
     }
 

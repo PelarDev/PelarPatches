@@ -3,4 +3,4 @@ author: 0x536F6170
 version: '1.0'
 main: ee.pelar.PelarPatches.Main
 description: Patches for Pelar server
-softdepend: ['AuthMe', 'DiscordSRV', 'GriefPrevention']
+softdepend: ['AuthMe', 'DiscordSRV', 'GriefPrevention', 'dynmap']
