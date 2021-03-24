@@ -15,3 +15,7 @@ tp_protection_cooldown: 30
 
 # Hides user that are spectators
 dynmap_spectator_hide: false
+
+# Player tag remover
+player_tag_remover: false
+tags_to_remove: []

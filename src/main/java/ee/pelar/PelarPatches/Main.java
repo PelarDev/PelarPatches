@@ -48,10 +48,17 @@ public class Main extends JavaPlugin {
             );
         }
 
-        if (config.getBoolean("tp_protection")) {
+        if (config.getBoolean("dynmap_spectator_hide")) {
             enablePatch(
-                    "TP_Protection",
+                    "Dynmap_spectator_hide",
                     new ee.pelar.PelarPatches.DynmapSpectatorHide.Events()
+            );
+        }
+
+        if (config.getBoolean("player_tag_remover")) {
+            enablePatch(
+                    "Player_tag_remover",
+                    new ee.pelar.PelarPatches.Player_tag_remover.Events(config.getStringList("tags_to_remove"))
             );
         }
 
