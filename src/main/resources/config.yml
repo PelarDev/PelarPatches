@@ -10,8 +10,10 @@ discordsrv-griefprevention: false
 discordsrv-chat: false
 
 # Protects player after teleport (command, plugin, unknown)
+# tp_protection_ignoreCooldown is the time needed to wait to get protection again.
 tp_protection: false
 tp_protection_cooldown: 30
+tp_protection_ignoreCooldown: 35
 
 # Hides user that are spectators
 dynmap_spectator_hide: false

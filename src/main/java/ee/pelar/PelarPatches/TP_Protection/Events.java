@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -17,9 +18,11 @@ public class Events implements Listener {
 
     private HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
     private int cooldownLenght = 30;
+    private int ignoreCooldown = 35;
 
-    public Events(int cooldownLenght) {
+    public Events(int cooldownLenght, int ignoreCooldown) {
         this.cooldownLenght = cooldownLenght;
+        this.ignoreCooldown = ignoreCooldown;
     }
 
 
@@ -29,7 +32,8 @@ public class Events implements Listener {
                 || event.getCause().name().equals("PLUGIN")
                 || event.getCause().name().equals("UNKNOWN"))
                 && event.getPlayer().getGameMode().toString().equals("SURVIVAL")
-                && !event.getTo().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+                && !event.getTo().getWorld().getEnvironment().equals(World.Environment.NORMAL)
+                && canGetProtection(event.getPlayer().getUniqueId())) {
             cooldown.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
         }
     }
@@ -42,18 +46,18 @@ public class Events implements Listener {
                 event.getDamager().sendMessage(ChatColor.RED + "TP järgne puutumatus pole veel läbi saanud.");
             }
         }
-        if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
-            Arrow arrow = (Arrow) event.getDamager();
-            if (arrow.getShooter() instanceof Player) {
-                Player shooterP = (Player) arrow.getShooter();
+        if ((event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE || event.getCause() == EntityDamageEvent.DamageCause.MAGIC) && event.getEntity() instanceof Player) {
+            Projectile projectile = (Projectile) event.getDamager();
+            if (projectile.getShooter() instanceof Player) {
+                Player shooterP = (Player) projectile.getShooter();
                 Player targetP = (Player) event.getEntity();
                 if (isInCooldown(shooterP.getUniqueId())) {
                     event.setCancelled(true);
-                    arrow.remove();
+                    if (event.getDamager() instanceof Arrow) projectile.remove();
                     shooterP.sendMessage(ChatColor.RED + "TP järgne puutumatus pole veel läbi saanud.");
                 } else if (isInCooldown(targetP.getUniqueId())) {
                     event.setCancelled(true);
-                    arrow.remove();
+                    if (event.getDamager() instanceof Arrow) projectile.remove();
                     shooterP.sendMessage(ChatColor.RED + "TP järgne puutumatus pole veel läbi saanud.");
                 }
             }
@@ -71,12 +75,21 @@ public class Events implements Listener {
         }
     }
     
-    public boolean isInCooldown(UUID uuid) {
+    private boolean isInCooldown(UUID uuid) {
         if(cooldown.containsKey(uuid)) {
             long timeLeft = (cooldown.get(uuid) + this.cooldownLenght * 1000L) - System.currentTimeMillis();
             return (timeLeft > 0);
         } else {
             return false;
+        }
+    }
+
+    private boolean canGetProtection(UUID uuid) {
+        if (cooldown.containsKey(uuid)) {
+            long timeLeft = (cooldown.get(uuid) + this.ignoreCooldown * 1000L) - System.currentTimeMillis();
+            return (timeLeft < 0);
+        } else {
+            return true;
         }
     }
 }
