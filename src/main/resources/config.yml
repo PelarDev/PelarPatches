@@ -21,3 +21,6 @@ dynmap_spectator_hide: false
 # Player tag remover
 player_tag_remover: false
 tags_to_remove: []
+
+# DKBans commands with uuid from name
+dkbans_cmd_uuid: false

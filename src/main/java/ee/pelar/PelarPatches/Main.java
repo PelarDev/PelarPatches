@@ -1,5 +1,6 @@
 package ee.pelar.PelarPatches;
 
+import ee.pelar.PelarPatches.DKBans_cmd_uuid.Commands;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
@@ -60,6 +61,15 @@ public class Main extends JavaPlugin {
                     "Player_tag_remover",
                     new ee.pelar.PelarPatches.Player_tag_remover.Events(config.getStringList("tags_to_remove"))
             );
+        }
+
+        if (config.getBoolean("dkbans_cmd_uuid")) {
+            log("Enabling `DKBans_cmd_uuid` patch...");
+            Commands commands = new Commands();
+            getCommand("pp").setExecutor(commands);
+            getCommand("pp").setTabCompleter(commands);
+            log("Patch enabled!");
+            enabledPatches += 1;
         }
 
         log("Enabled " + enabledPatches + " patch(es)!");
