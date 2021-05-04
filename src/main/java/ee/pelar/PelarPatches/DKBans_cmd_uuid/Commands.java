@@ -7,14 +7,15 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Commands implements TabExecutor {
 
@@ -22,31 +23,19 @@ public class Commands implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return false;
         if (args.length == 0) return false;
-        String name = null, uuid = null;
-        if (Bukkit.getPlayer(args[0]) != null) {
-            Player player = Bukkit.getPlayer(args[0]);
-            name = player.getName();
-            uuid = player.getUniqueId().toString();
-        }
-        if (Bukkit.getOfflinePlayer(args[0]).hasPlayedBefore() && uuid == null) {
-            OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
-            name = player.getName();
-            uuid = player.getUniqueId().toString();
-        }
-        if (uuid == null) {
-            sender.sendMessage("Player not found!");
-            return false;
-        }
+        String name = args[0];
+        String uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8)).toString();
+
         BaseComponent comp = new TextComponent("PelarPunish\n");
         comp.setColor(ChatColor.RED);
         comp.setBold(true);
         if (sender.hasPermission("dkbans.warn")) {
             comp.addExtra(getBaseComp(new TextComponent("Warn\n"), "/warn " + name, "/warn "
-                    + uuid, ClickEvent.Action.SUGGEST_COMMAND, ChatColor.DARK_RED));
+                    + uuid, ClickEvent.Action.SUGGEST_COMMAND, ChatColor.GOLD));
         }
         if (sender.hasPermission("dkbans.ban")) {
             comp.addExtra(getBaseComp(new TextComponent("Ban\n"), "/ban " + name, "/ban "
-                    + uuid, ClickEvent.Action.SUGGEST_COMMAND, ChatColor.GOLD));
+                    + uuid, ClickEvent.Action.SUGGEST_COMMAND, ChatColor.DARK_RED));
         }
         if (sender.hasPermission("dkbans.ban.temp.mute")) {
             comp.addExtra(getBaseComp(new TextComponent("Mute\n"), "/tempmute " + name, "/tempmute "
