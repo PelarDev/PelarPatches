@@ -63,6 +63,13 @@ public class Main extends JavaPlugin {
             );
         }
 
+        if (config.getBoolean("riptide_fix")) {
+            enablePatch(
+                    "Riptide_fix",
+                    new ee.pelar.PelarPatches.Riptide_fix.Events()
+            );
+        }
+
         if (config.getBoolean("dkbans_cmd_uuid")) {
             log("Enabling `DKBans_cmd_uuid` patch...");
             Commands commands = new Commands();

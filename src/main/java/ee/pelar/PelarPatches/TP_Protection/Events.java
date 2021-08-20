@@ -1,16 +1,19 @@
 package ee.pelar.PelarPatches.TP_Protection;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -19,12 +22,29 @@ public class Events implements Listener {
     private HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
     private int cooldownLenght = 30;
     private int ignoreCooldown = 35;
+    private ArrayList<Material> blockedMaterials = new ArrayList<>();
 
     public Events(int cooldownLenght, int ignoreCooldown) {
         this.cooldownLenght = cooldownLenght;
         this.ignoreCooldown = ignoreCooldown;
+        blockedMaterials.add(Material.BLACK_BED);
+        blockedMaterials.add(Material.BLUE_BED);
+        blockedMaterials.add(Material.BROWN_BED);
+        blockedMaterials.add(Material.CYAN_BED);
+        blockedMaterials.add(Material.GRAY_BED);
+        blockedMaterials.add(Material.GREEN_BED);
+        blockedMaterials.add(Material.LIGHT_BLUE_BED);
+        blockedMaterials.add(Material.LIGHT_GRAY_BED);
+        blockedMaterials.add(Material.LIME_BED);
+        blockedMaterials.add(Material.MAGENTA_BED);
+        blockedMaterials.add(Material.ORANGE_BED);
+        blockedMaterials.add(Material.PINK_BED);
+        blockedMaterials.add(Material.PURPLE_BED);
+        blockedMaterials.add(Material.RED_BED);
+        blockedMaterials.add(Material.WHITE_BED);
+        blockedMaterials.add(Material.YELLOW_BED);
+        blockedMaterials.add(Material.RESPAWN_ANCHOR);
     }
-
 
     @EventHandler
     public void onPlayerTp(PlayerTeleportEvent event) {
@@ -72,6 +92,16 @@ public class Events implements Listener {
             if(isInCooldown(event.getEntity().getUniqueId())) {
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if (isInCooldown(event.getPlayer().getUniqueId())
+                && blockedMaterials.contains(event.getBlockPlaced().getType())
+                && !event.getPlayer().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+            event.setCancelled(true);
+            event.getPlayer().sendMessage(ChatColor.RED + "TP järgne puutumatus pole veel läbi saanud.");
         }
     }
     

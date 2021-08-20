@@ -24,3 +24,6 @@ tags_to_remove: []
 
 # DKBans commands with uuid from name
 dkbans_cmd_uuid: false
+
+# Resets player weather weather when uses riptide trident
+riptide_fix: false
