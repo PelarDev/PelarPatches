@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -44,6 +45,7 @@ public class Events implements Listener {
         blockedMaterials.add(Material.WHITE_BED);
         blockedMaterials.add(Material.YELLOW_BED);
         blockedMaterials.add(Material.RESPAWN_ANCHOR);
+        blockedMaterials.add(Material.END_CRYSTAL);
     }
 
     @EventHandler
@@ -81,6 +83,11 @@ public class Events implements Listener {
                     shooterP.sendMessage(ChatColor.RED + "TP järgne puutumatus pole veel läbi saanud.");
                 }
             }
+        }
+        if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION
+                && event.getDamager() instanceof EnderCrystal && event.getEntity() instanceof Player
+                && event.getDamager().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+            event.setCancelled(true);
         }
     }
 

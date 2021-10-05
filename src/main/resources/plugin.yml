@@ -5,10 +5,3 @@ api-version: 1.17
 main: ee.pelar.PelarPatches.Main
 description: Patches for Pelar server
 softdepend: ['AuthMe', 'DiscordSRV', 'GriefPrevention', 'dynmap']
-commands:
-  pelarpunish:
-    description: Generates DKBans command with uuid instead of p-name.
-    usage: /pp [Player]
-    permission: dkbans.command.playerInfo
-    aliases:
-      - pp
