@@ -86,17 +86,18 @@ public class Events implements Listener {
         }
         if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION
                 && event.getDamager() instanceof EnderCrystal && event.getEntity() instanceof Player
-                && event.getDamager().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+                && (event.getDamager().getWorld().getEnvironment().equals(World.Environment.NORMAL)
+                || isInCooldown(((Player) event.getEntity()).getUniqueId()))) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
-        if((event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)
-                || (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
+        if (event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION
                 && (event.getEntity() instanceof Player)) {
-            if(isInCooldown(event.getEntity().getUniqueId())) {
+            if(isInCooldown(event.getEntity().getUniqueId())
+                    || event.getEntity().getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
                 event.setCancelled(true);
             }
         }

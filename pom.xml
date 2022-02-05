@@ -69,14 +69,15 @@
         <dependency>
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.14.0</version>
+            <version>16.17.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- DiscordSRV -->
         <dependency>
             <groupId>com.discordsrv</groupId>
             <artifactId>discordsrv</artifactId>
-            <version>1.19.1</version>
+            <version>1.24.0</version>
             <scope>provided</scope>
         </dependency>
 
