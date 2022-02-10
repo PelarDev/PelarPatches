@@ -4,4 +4,4 @@ version: '1.0'
 api-version: 1.17
 main: ee.pelar.PelarPatches.Main
 description: Patches for Pelar server
-softdepend: ['AuthMe', 'DiscordSRV', 'GriefPrevention', 'dynmap']
+softdepend: ['AuthMe', 'DiscordSRV', 'GriefPrevention', 'dynmap', 'CoreProtect']

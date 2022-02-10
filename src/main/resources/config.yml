@@ -24,3 +24,8 @@ tags_to_remove: []
 
 # Resets player weather weather when uses riptide trident
 riptide_fix: false
+
+# When true CO will not log login commands and commands with passwords
+coreprotect_login: false
+# Command regex
+coreprotect_loginr: "(^/login\\s{1})|(^/l\\s{1})|(^/changepass\\s{1})|(^/changepassword\\s{1})"

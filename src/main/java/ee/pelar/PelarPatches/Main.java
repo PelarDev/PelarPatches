@@ -12,7 +12,6 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         enabledPatches = 0;
 
         loadConfig();
@@ -66,6 +65,13 @@ public class Main extends JavaPlugin {
             enablePatch(
                     "Riptide_fix",
                     new ee.pelar.PelarPatches.Riptide_fix.Events()
+            );
+        }
+
+        if (config.getBoolean("coreprotect_login")) {
+            enablePatch(
+                    "CoreProtect_login",
+                    new ee.pelar.PelarPatches.CoreProtect_login.Events(config.getString("coreprotect_loginr"))
             );
         }
 
