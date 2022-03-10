@@ -14,7 +14,7 @@ public class Events implements Listener {
         if (event.getItem() == null || event.getPlayer().getPlayerWeather() == null) return;
         if (event.getItem().containsEnchantment(Enchantment.RIPTIDE) && event.getPlayer().getPlayerWeather() == WeatherType.DOWNFALL) {
             event.getPlayer().resetPlayerWeather();
-            event.getPlayer().sendMessage(ChatColor.RED + "Riptide (Tagasivool) lotsu pärast pandi sinu ilmaks serveri ilm");
+            event.getPlayer().sendMessage(ChatColor.RED + "Riptide (Tagasivool) loitsu tõttu määrati sinu ilmaks serveri ilm");
         }
     }
 }
