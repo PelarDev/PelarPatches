@@ -32,6 +32,12 @@
             <id>Scarsz-Nexus</id>
             <url>https://nexus.scarsz.me/content/groups/public/</url>
         </repository>
+
+        <!-- Dynmap API repo -->
+        <repository>
+            <id>MikeRepo</id>
+            <url>https://repo.mikeprimm.com/</url>
+        </repository>
     </repositories>
 
     <build>
@@ -83,9 +89,10 @@
 
         <!-- DynMap -->
         <dependency>
-            <groupId>com.github.webbukkit</groupId>
+            <groupId>us.dynmap</groupId>
             <artifactId>dynmap-api</artifactId>
-            <version>2.5</version>
+            <version>3.4-beta-3</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
